@@ -4,9 +4,21 @@ import reactLogo from './assets/react.svg'
 import viteLogo from './assets/vite.svg'
 import './App.css'
 
+
 const API_KEY = "b676ab91";
 // * primer api poziva
+// * https://www.omdbapi.com/?t=Terminator&apikey=b676ab91
+
+
 // https://www.omdbapi.com/?t=Terminator&apikey=b676ab91 
+
+
+// process -> nas trenutni srver koji je ukljucen
+// .env -> odnosi se na fajl = REACT_APP_OMDBAPI_KEY
+// REACT_APP_OMDBAPI_KEY -> izvuci iz njega REACT_APP_OMDBAPI_KEY
+
+// console.log(process.env.REACT_APP_OMDBAPI_KEY);
+console.log(process.env.REACT_APP_OMDBAPI_KEY)
 
 
 function App() {
