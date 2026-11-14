@@ -3,8 +3,11 @@ import heroImg from "./assets/hero.png";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import "./App.css";
+import axios from "axios";
+import Movies from "./Components/Movies";
 
 const API_KEY = "b676ab91";
+
 // * primer api poziva
 // * https://www.omdbapi.com/?t=Terminator&apikey=b676ab91
 
@@ -20,126 +23,83 @@ const apiKey = import.meta.env.VITE_OMDBAPI_KEY;
 const apiUrl = import.meta.env.VITE_OMDBAPI_URL;
 
 console.log(apiKey);
-// console.log(apiUrl);
+console.log(apiUrl);
 
-// console.log(process.env.VITE_OMDBAPI_KEY, process.env.VITE_OMDBAPI_URL)
 
-// console.log(process.env.VITE_OMDBAPI_KEY, process.env.VITE_OMDBAPI_KEY)
-// console.log(apiKey, process.env.VITE_OMDBAPI_KEY, process.env.VITE_OMDBAPI_URL);
-// console.log(process.env.VITE_OMDBAPI_KEY, process.env.URL)
+// * sa fetch -> mi pozivamo api
+
+// ** GET METODA kada imamo ovako vidljive (expose)?t=Terminator&apikey=b676ab91
+
+fetch("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
+	//  hvatamo response ili ti odgovor koji dobija nazad -> u prvovim than console.log(response) ->  dobijamo ugrubo podatke !
+	// * u prvom than -> mi poretvoramo taj odgovor koji smo mi dobili u JSON
+	.then(response => response.json()) // da poretvorimo odgovor u JSON
+
+	// mi sa drugim tham samo ispisujemo odgovor (te podatke) JSON
+	.then(jsonResponse => console.log(jsonResponse))
+
+
+// fetch("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
+	// hvatamo response ili ti odgovor koji dobija nazad -> u prvovim than console.log(response) ->  dobijamo ugrubo podatke !
+	// * u prvom than -> mi poretvoramo taj odgovor koji smo mi dobili u JSON
+	// .then(response => response.json()) // da poretvorimo odgovor u JSON
+
+	// mi sa drugim tham samo ispisujemo odgovor (te podatke) JSON
+	// .then(jasonResponse => console.log(jasonResponse))
+
+
+// * domaci: fetch da ide preko axiosa
+
+axios.get("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
+	// response.data - podatci
+	.then(response => console.log(response.data))
+	// .catch(error => console.log(error))
+
+
+// ** Domaci: da ovaj poziv preko fetch -> pretvorimo da ide preko axios
+
+axios.get(import.meta.env.VITE_OMDBAPI_URL+"?t=Terminator&apikey="+import.meta.env.VITE_OMDBAPI_KEY)
+	// sve podatke sa response.data
+	.then(response => console.log(response.data))
+	.catch(error => console.log(error))
+
+
+// parametar za get jeste url: https://www.omdbapi.com/?t=Terminator&apikey=b676ab91"
+
+// axios.get("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
+// 	.then(response => console.log(response.data))
+// 	.catch(error => console.log(error))
+
+// * moramo da importujemo axios 
+
+
+// * vezba: imamo stavari u .emv i url i api key "https://www.omdbapi.com/?t=Terminator&apikey" -> da promenimo da ne poziva ovako https://www.omdbapi.com/? axios -> vec da iz .env povlaci te podatke, ne smemo da imamo nigde kljuc od apija vec koristeci .env izvucemo ove podatke https://www.omdbapi.com/ /// u axios pozivo treba da promenimo sve iz .env https://www.omdbapi.com/?t=Terminator&apikey=7b676ab91
+
+axios.get(import.meta.env.VITE_OMDBAPI_URL+"?t=Terminator&apikey="+import.meta.env.VITE_OMDBAPI_KEY)
+
+console.log(import.meta.env.VITE_OMDBAPI_URL+"?t=Terminator&apikey="+import.meta.env.VITE_OMDBAPI_KEY)
+
+
+// axios.get("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")// dodao 7 ispred
+	// .then(response => console.log(response.data))
+
+	// hvatanje erora(greske koja se desila)
+	// .catch(error => console.log(error))
+
+//resenje:
+
+
+
+// * vezba: imamo stavari u .emv i url i api key "https://www.omdbapi.com/?t=Terminator&apikey" -> da promenimo dane poziva ovako https://www.omdbapi.com/? axios -> vec da iz .env povlaci te podatke, ne smemo da imamo nigde kljuc od apija vec koristeci .env izvucemo ove podatke https://www.omdbapi.com/ /// u axios pozivo treba da promenimo sve iz .env https://www.omdbapi.com/?t=Terminator&apikey=7b676ab91
+
+// domaci: forma u koju mogu upisati ime nekog filma
 
 // cek samo sekund
 function App() {
-	const [count, setCount] = useState(0);
 
 	return (
 		<>
-			<section id="center">
-				<div className="hero">
-					<img src={heroImg} className="base" width="170" height="179" alt="" />
-					<img src={reactLogo} className="framework" alt="React logo" />
-					<img src={viteLogo} className="vite" alt="Vite logo" />
-				</div>
-				<div>
-					<h1>Get started</h1>
-					<p>
-						Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-					</p>
-				</div>
-				<button
-					type="button"
-					className="counter"
-					onClick={() => setCount((count) => count + 1)}
-				>
-					Count is {count}
-				</button>
-			</section>
-
-			<div className="ticks"></div>
-
-			<section id="next-steps">
-				<div id="docs">
-					<svg className="icon" role="presentation" aria-hidden="true">
-						<use href="/icons.svg#documentation-icon"></use>
-					</svg>
-					<h2>Documentation</h2>
-					<p>Your questions, answered</p>
-					<ul>
-						<li>
-							<a href="https://vite.dev/" target="_blank">
-								<img className="logo" src={viteLogo} alt="" />
-								Explore Vite
-							</a>
-						</li>
-						<li>
-							<a href="https://react.dev/" target="_blank">
-								<img className="button-icon" src={reactLogo} alt="" />
-								Learn more
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div id="social">
-					<svg className="icon" role="presentation" aria-hidden="true">
-						<use href="/icons.svg#social-icon"></use>
-					</svg>
-					<h2>Connect with us</h2>
-					<p>Join the Vite community</p>
-					<ul>
-						<li>
-							<a href="https://github.com/vitejs/vite" target="_blank">
-								<svg
-									className="button-icon"
-									role="presentation"
-									aria-hidden="true"
-								>
-									<use href="/icons.svg#github-icon"></use>
-								</svg>
-								GitHub
-							</a>
-						</li>
-						<li>
-							<a href="https://chat.vite.dev/" target="_blank">
-								<svg
-									className="button-icon"
-									role="presentation"
-									aria-hidden="true"
-								>
-									<use href="/icons.svg#discord-icon"></use>
-								</svg>
-								Discord
-							</a>
-						</li>
-						<li>
-							<a href="https://x.com/vite_js" target="_blank">
-								<svg
-									className="button-icon"
-									role="presentation"
-									aria-hidden="true"
-								>
-									<use href="/icons.svg#x-icon"></use>
-								</svg>
-								X.com
-							</a>
-						</li>
-						<li>
-							<a href="https://bsky.app/profile/vite.dev" target="_blank">
-								<svg
-									className="button-icon"
-									role="presentation"
-									aria-hidden="true"
-								>
-									<use href="/icons.svg#bluesky-icon"></use>
-								</svg>
-								Bluesky
-							</a>
-						</li>
-					</ul>
-				</div>
-			</section>
-
-			<div className="ticks"></div>
-			<section id="spacer"></section>
+			<Movies />
 		</>
 	);
 }
