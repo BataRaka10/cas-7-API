@@ -5,6 +5,8 @@ import viteLogo from "./assets/vite.svg";
 import "./App.css";
 import axios from "axios";
 import Movies from "./Components/Movies";
+import MovieCard from "./Templates/MovieCard";
+import Movies2 from "./Components/Movies2";
 
 const API_KEY = "b676ab91";
 
@@ -18,21 +20,23 @@ const API_KEY = "b676ab91";
 // REACT_APP_OMDBAPI_KEY -> izvuci iz njega REACT_APP_OMDBAPI_KEY
 
 // RESENJE: UMESTO REACT IDE VITE
-const apiKey = import.meta.env.VITE_OMDBAPI_KEY;
-
-const apiUrl = import.meta.env.VITE_OMDBAPI_URL;
+// const apiKey = import.meta.env.VITE_OMDBAPI_KEY;
+const apiKey = import.meta.env.VITE_OMDBAPI_KEY
+// const apiUrl = import.meta.env.VITE_OMDBAPI_URL;
+const apiUrl = import.meta.env.VITE_OMDBAPI_URL
 
 console.log(apiKey);
 console.log(apiUrl);
-
 
 // * sa fetch -> mi pozivamo api
 
 // ** GET METODA kada imamo ovako vidljive (expose)?t=Terminator&apikey=b676ab91
 
 fetch("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
-	//  hvatamo response ili ti odgovor koji dobija nazad -> u prvovim than console.log(response) ->  dobijamo ugrubo podatke !
-	// * u prvom than -> mi poretvoramo taj odgovor koji smo mi dobili u JSON
+	// hvatamo response ili ti odgovor koji dobija nazad -> u prvovim than console.log(response) ->  dobijamo ugrubo podatke !
+	// .then(response => console.log(response))
+	
+	// * u prvom then -> mi poretvoramo taj odgovor koji smo mi dobili u JSON
 	.then(response => response.json()) // da poretvorimo odgovor u JSON
 
 	// mi sa drugim tham samo ispisujemo odgovor (te podatke) JSON
@@ -51,17 +55,27 @@ fetch("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
 // * domaci: fetch da ide preko axiosa
 
 axios.get("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
-	// response.data - podatci
+	// 
 	.then(response => console.log(response.data))
+	.catch(error => console.log(error))
+
+
+// axios.get("https://www.omdbapi.com/?t=Terminator&apikey=b676ab91")
+	// response.data - podatci
+	// .then(response => console.log(response.data))
 	// .catch(error => console.log(error))
 
 
 // ** Domaci: da ovaj poziv preko fetch -> pretvorimo da ide preko axios
 
 axios.get(import.meta.env.VITE_OMDBAPI_URL+"?t=Terminator&apikey="+import.meta.env.VITE_OMDBAPI_KEY)
+
+console.log(import.meta.env.VITE_OMDBAPI_URL+"?t=Terminator&apikey="+import.meta.env.VITE_OMDBAPI_KEY)
+
+// axios.get(import.meta.env.VITE_OMDBAPI_URL+"?t=Terminator&apikey="+import.meta.env.VITE_OMDBAPI_KEY)
 	// sve podatke sa response.data
-	.then(response => console.log(response.data))
-	.catch(error => console.log(error))
+	// .then(response => console.log(response.data))
+	// .catch(error => console.log(error))
 
 
 // parametar za get jeste url: https://www.omdbapi.com/?t=Terminator&apikey=b676ab91"
@@ -100,6 +114,8 @@ function App() {
 	return (
 		<>
 			<Movies />
+
+			<Movies2 />
 		</>
 	);
 }
